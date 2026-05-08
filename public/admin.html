@@ -163,11 +163,11 @@
     </div>
 
     <div class="settings-card">
-      <h3>Supprimer des pointages</h3>
-      <p style="font-size:0.85rem;color:var(--ink-light);margin-bottom:1rem">Clique sur 🗑 pour supprimer un pointage individuel.</p>
+      <h3>Modifier / Supprimer</h3>
+      <p style="font-size:0.85rem;color:var(--ink-light);margin-bottom:1rem">Clique sur ✏️ pour modifier la date/heure ou le type. Clique sur 🗑 pour supprimer.</p>
       <div class="table-wrap" style="margin-bottom:1rem">
         <table>
-          <thead><tr><th>Date</th><th>Heure</th><th>Type</th><th></th></tr></thead>
+          <thead><tr><th>Date &amp; heure</th><th>Type</th><th style="width:80px"></th></tr></thead>
           <tbody id="edit-body"></tbody>
         </table>
       </div>
@@ -402,16 +402,60 @@ async function renderEdit() {
   const entries = await getAllEntries();
   const tbody = document.getElementById('edit-body');
   if (!entries.length) {
-    tbody.innerHTML = `<tr><td colspan="4" class="empty">Aucun pointage</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="3" class="empty">Aucun pointage</td></tr>`;
     return;
   }
-  tbody.innerHTML = [...entries].reverse().map(e => `
+  tbody.innerHTML = [...entries].reverse().map(e => buildRow(e)).join('');
+}
+
+function toLocalISO(ts) {
+  const d = new Date(ts);
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 16);
+}
+
+function buildRow(e) {
+  return `
     <tr id="row-${e.id}">
-      <td>${fmtDate(e.created_at)}</td>
-      <td>${fmtTime(e.created_at)}</td>
+      <td>${fmtDate(e.created_at)} ${fmtTime(e.created_at)}</td>
       <td><span class="pill ${e.type === 'in' ? 'pill-in' : 'pill-out'}">${e.type === 'in' ? 'Arrivée' : 'Départ'}</span></td>
-      <td><button class="btn btn-danger btn-sm" onclick="deleteEntry('${e.id}')">🗑</button></td>
-    </tr>`).join('');
+      <td style="display:flex;gap:6px;justify-content:flex-end">
+        <button class="btn btn-sm" onclick="startEdit('${e.id}','${e.created_at}','${e.type}')" title="Modifier">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteEntry('${e.id}')" title="Supprimer">🗑</button>
+      </td>
+    </tr>`;
+}
+
+function startEdit(id, created_at, type) {
+  const row = document.getElementById('row-' + id);
+  const localVal = toLocalISO(created_at);
+  row.innerHTML = `
+    <td colspan="2">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input type="datetime-local" value="${localVal}" id="edit-dt-${id}" style="flex:1;min-width:160px;margin-bottom:0">
+        <select id="edit-type-${id}" style="width:120px;margin-bottom:0">
+          <option value="in" ${type==='in'?'selected':''}>Arrivée</option>
+          <option value="out" ${type==='out'?'selected':''}>Départ</option>
+        </select>
+      </div>
+    </td>
+    <td style="display:flex;gap:6px;justify-content:flex-end;padding-top:12px">
+      <button class="btn btn-primary btn-sm" onclick="saveEdit('${id}')">✓</button>
+      <button class="btn btn-sm" onclick="renderEdit()">✕</button>
+    </td>`;
+}
+
+async function saveEdit(id) {
+  const dt = document.getElementById('edit-dt-' + id).value;
+  const type = document.getElementById('edit-type-' + id).value;
+  if (!dt) return;
+  await sbFetch(`/rest/v1/pointages?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ created_at: new Date(dt).toISOString(), type })
+  });
+  renderEdit();
+  renderDashboard();
 }
 
 async function addEntry() {
