@@ -17,19 +17,11 @@
     --border: #E8E4DC; --white: #FFFFFF;
   }
   body { background: var(--cream); font-family: 'DM Sans', sans-serif; color: var(--ink); min-height: 100vh; }
-  header {
-    background: var(--white); border-bottom: 1px solid var(--border);
-    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 10;
-  }
+  header { background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--ink); }
   .logo span { color: var(--gold); }
-  nav { display: flex; gap: 0.25rem; }
-  nav button {
-    padding: 0.45rem 1rem; border-radius: 8px; border: none; background: none;
-    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer;
-    color: var(--ink-light); transition: all 0.15s;
-  }
+  nav { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  nav button { padding: 0.45rem 0.875rem; border-radius: 8px; border: none; background: none; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer; color: var(--ink-light); transition: all 0.15s; }
   nav button.active, nav button:hover { background: var(--cream); color: var(--ink); font-weight: 500; }
   main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
   .page { display: none; }
@@ -41,11 +33,7 @@
   .metric-sub { font-size: 0.75rem; color: var(--ink-light); margin-top: 0.25rem; }
   .month-nav { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
   .month-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; flex: 1; }
-  .icon-btn {
-    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
-    background: var(--white); cursor: pointer; font-size: 1rem;
-    display: flex; align-items: center; justify-content: center; transition: background 0.12s;
-  }
+  .icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--white); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.12s; }
   .icon-btn:hover { background: var(--cream); }
   .table-wrap { background: var(--white); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 1.5rem; }
   table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
@@ -57,14 +45,13 @@
   .pill-in { background: var(--green-light); color: var(--green); }
   .pill-out { background: var(--red-light); color: var(--red); }
   .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .btn {
-    padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid var(--border);
-    background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-    cursor: pointer; color: var(--ink); transition: all 0.12s; font-weight: 500;
-  }
+  .btn { padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid var(--border); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer; color: var(--ink); transition: all 0.12s; font-weight: 500; }
   .btn:hover { background: var(--cream); }
   .btn-primary { background: var(--ink); color: var(--white); border-color: transparent; }
   .btn-primary:hover { opacity: 0.85; background: var(--ink); }
+  .btn-danger { background: var(--red-light); color: var(--red); border-color: #F09595; }
+  .btn-danger:hover { background: #F7C1C1; }
+  .btn-sm { padding: 0.3rem 0.65rem; font-size: 0.78rem; }
   .qr-card { background: var(--white); border-radius: 16px; border: 1px solid var(--border); padding: 2.5rem; text-align: center; max-width: 400px; margin: 0 auto 1.5rem; }
   .qr-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; margin-bottom: 0.5rem; }
   .qr-card p { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 1.5rem; }
@@ -74,13 +61,11 @@
   .settings-card { background: var(--white); border-radius: 16px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
   .settings-card h3 { font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-light); margin-bottom: 1rem; }
   label { display: block; font-size: 0.82rem; color: var(--ink-light); margin-bottom: 0.3rem; }
-  input[type=text], input[type=number], input[type=password], textarea {
-    width: 100%; padding: 0.6rem 0.875rem; border: 1px solid var(--border);
-    border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-    color: var(--ink); background: var(--cream); margin-bottom: 1rem; transition: border-color 0.15s;
+  input[type=text], input[type=number], input[type=password], input[type=datetime-local], select, textarea {
+    width: 100%; padding: 0.6rem 0.875rem; border: 1px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; color: var(--ink); background: var(--cream); margin-bottom: 1rem; transition: border-color 0.15s;
   }
   textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
-  input:focus, textarea:focus { outline: none; border-color: var(--gold); background: var(--white); }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--gold); background: var(--white); }
   .success-msg { font-size: 0.82rem; color: var(--green); margin-top: 0.5rem; display: none; }
   .login-overlay { position: fixed; inset: 0; background: var(--cream); display: flex; align-items: center; justify-content: center; z-index: 100; }
   .login-box { background: var(--white); border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border); max-width: 340px; width: 90%; text-align: center; }
@@ -88,8 +73,11 @@
   .login-box p { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 1.5rem; }
   .login-error { font-size: 0.8rem; color: var(--red); margin-top: 0.5rem; display: none; }
   .empty { text-align: center; padding: 3rem; color: var(--ink-light); font-size: 0.9rem; }
-  .message-preview { background: var(--cream); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.85rem; color: var(--ink-light); margin-top: -0.5rem; margin-bottom: 1rem; }
-  .message-preview strong { color: var(--ink); display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .message-active { display: flex; align-items: flex-start; gap: 0.75rem; background: var(--gold-light); border: 1px solid #F0C870; border-radius: 10px; padding: 0.875rem 1rem; margin-bottom: 1rem; font-size: 0.875rem; }
+  .message-active-text { flex: 1; color: var(--ink); line-height: 1.5; }
+  .message-active-label { font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 0.25rem; }
+  .add-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end; }
+  @media (max-width: 580px) { .add-form { grid-template-columns: 1fr; } header { padding: 0.75rem 1rem; } main { padding: 1rem; } }
 </style>
 </head>
 <body>
@@ -111,12 +99,14 @@
   <nav>
     <button class="active" onclick="showPage('dashboard', this)">Tableau de bord</button>
     <button onclick="showPage('history', this)">Historique</button>
+    <button onclick="showPage('edit', this)">Corriger</button>
     <button onclick="showPage('qr', this)">QR Code</button>
     <button onclick="showPage('settings', this)">Réglages</button>
   </nav>
 </header>
 
 <main>
+
   <!-- DASHBOARD -->
   <div class="page active" id="page-dashboard">
     <div class="month-nav">
@@ -137,7 +127,7 @@
     </div>
   </div>
 
-  <!-- HISTORY -->
+  <!-- HISTORIQUE -->
   <div class="page" id="page-history">
     <h2 style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:1.5rem">Tous les pointages</h2>
     <div class="table-wrap">
@@ -148,7 +138,44 @@
     </div>
   </div>
 
-  <!-- QR -->
+  <!-- CORRIGER -->
+  <div class="page" id="page-edit">
+    <div class="settings-card">
+      <h3>Ajouter un pointage</h3>
+      <div class="add-form">
+        <div>
+          <label>Date et heure</label>
+          <input type="datetime-local" id="add-datetime">
+        </div>
+        <div>
+          <label>Type</label>
+          <select id="add-type">
+            <option value="in">Arrivée</option>
+            <option value="out">Départ</option>
+          </select>
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button class="btn btn-primary" style="width:100%;margin-bottom:1rem" onclick="addEntry()">+ Ajouter</button>
+        </div>
+      </div>
+      <div class="success-msg" id="add-ok">✓ Pointage ajouté</div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Supprimer des pointages</h3>
+      <p style="font-size:0.85rem;color:var(--ink-light);margin-bottom:1rem">Clique sur 🗑 pour supprimer un pointage individuel.</p>
+      <div class="table-wrap" style="margin-bottom:1rem">
+        <table>
+          <thead><tr><th>Date</th><th>Heure</th><th>Type</th><th></th></tr></thead>
+          <tbody id="edit-body"></tbody>
+        </table>
+      </div>
+      <button class="btn btn-danger" onclick="deleteAll()">🗑 Tout supprimer</button>
+    </div>
+  </div>
+
+  <!-- QR CODE -->
   <div class="page" id="page-qr">
     <div class="qr-card">
       <h2>QR Code de pointage</h2>
@@ -169,14 +196,19 @@
     </div>
   </div>
 
-  <!-- SETTINGS -->
+  <!-- RÉGLAGES -->
   <div class="page" id="page-settings">
+
     <div class="settings-card">
       <h3>Message du jour</h3>
+      <div id="message-active-display" style="display:none"></div>
       <label>Message affiché à l'arrivée (laisse vide pour ne rien afficher)</label>
-      <textarea id="s-message" placeholder="ex: Merci de penser à passer l'aspirateur dans la chambre bleue aujourd'hui !"></textarea>
-      <button class="btn btn-primary" onclick="saveMessage()" style="margin-bottom:0.75rem">Envoyer le message</button>
-      <div class="success-msg" id="message-ok">✓ Message enregistré</div>
+      <textarea id="s-message" placeholder="ex: Merci de penser à passer l'aspirateur dans la chambre bleue !"></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="saveMessage()">Envoyer le message</button>
+        <button class="btn btn-danger" onclick="deleteMessage()">Supprimer le message</button>
+      </div>
+      <div class="success-msg" id="message-ok" style="margin-top:0.75rem">✓ Message mis à jour</div>
     </div>
 
     <div class="settings-card">
@@ -188,6 +220,7 @@
       <label>Taux horaire brut (€)</label>
       <input type="number" id="s-rate" placeholder="13.50" step="0.01">
     </div>
+
     <div class="settings-card">
       <h3>Employeur</h3>
       <label>Prénom Nom</label>
@@ -195,14 +228,17 @@
       <label>Numéro CESU employeur</label>
       <input type="text" id="s-cesu-emp2" placeholder="9876543210">
     </div>
+
     <div class="settings-card">
       <h3>Accès</h3>
-      <label>Mot de passe dashboard</label>
-      <input type="password" id="s-pwd" placeholder="Nouveau mot de passe">
+      <label>Nouveau mot de passe dashboard</label>
+      <input type="password" id="s-pwd" placeholder="Laisser vide pour ne pas changer">
     </div>
+
     <button class="btn btn-primary" onclick="saveSettings()">Enregistrer</button>
     <div class="success-msg" id="settings-ok">✓ Paramètres enregistrés</div>
   </div>
+
 </main>
 
 <script>
@@ -214,6 +250,7 @@ const DEFAULT_PWD  = 'cesu1234';
 let currentMonth = new Date().getMonth();
 let currentYear  = new Date().getFullYear();
 
+// ── Auth ──────────────────────────────────────────────
 function checkPwd() {
   const pwd = document.getElementById('pwd-input').value;
   const stored = localStorage.getItem('cesu_pwd') || DEFAULT_PWD;
@@ -225,6 +262,7 @@ function checkPwd() {
   }
 }
 
+// ── API ───────────────────────────────────────────────
 async function sbFetch(path, opts = {}) {
   const res = await fetch(SUPABASE_URL + path, {
     ...opts,
@@ -249,6 +287,7 @@ async function getAllEntries() {
   return await sbFetch(`/rest/v1/pointages?employee_id=eq.${EMPLOYEE_ID}&order=created_at.asc`);
 }
 
+// ── Nav ───────────────────────────────────────────────
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -257,6 +296,7 @@ function showPage(id, btn) {
   if (id === 'qr') renderQR();
   if (id === 'settings') loadSettings();
   if (id === 'history') renderHistory();
+  if (id === 'edit') renderEdit();
 }
 
 function changeMonth(d) {
@@ -266,6 +306,7 @@ function changeMonth(d) {
   renderDashboard();
 }
 
+// ── Sessions ──────────────────────────────────────────
 function computeSessions(entries, month, year) {
   const filtered = entries.filter(e => {
     const d = new Date(e.created_at);
@@ -287,6 +328,7 @@ function computeSessions(entries, month, year) {
 function fmtTime(ts) { return new Date(ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
 function fmtDate(ts) { return new Date(ts).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }); }
 
+// ── Dashboard ─────────────────────────────────────────
 async function renderDashboard() {
   const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   document.getElementById('month-title').textContent = months[currentMonth] + ' ' + currentYear;
@@ -335,6 +377,7 @@ async function renderDashboard() {
   }
 }
 
+// ── Historique ────────────────────────────────────────
 async function renderHistory() {
   const entries = await getAllEntries();
   const tbody = document.getElementById('history-body');
@@ -350,6 +393,57 @@ async function renderHistory() {
     </tr>`).join('');
 }
 
+// ── Corriger ──────────────────────────────────────────
+async function renderEdit() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  document.getElementById('add-datetime').value = now.toISOString().slice(0, 16);
+
+  const entries = await getAllEntries();
+  const tbody = document.getElementById('edit-body');
+  if (!entries.length) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty">Aucun pointage</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = [...entries].reverse().map(e => `
+    <tr id="row-${e.id}">
+      <td>${fmtDate(e.created_at)}</td>
+      <td>${fmtTime(e.created_at)}</td>
+      <td><span class="pill ${e.type === 'in' ? 'pill-in' : 'pill-out'}">${e.type === 'in' ? 'Arrivée' : 'Départ'}</span></td>
+      <td><button class="btn btn-danger btn-sm" onclick="deleteEntry('${e.id}')">🗑</button></td>
+    </tr>`).join('');
+}
+
+async function addEntry() {
+  const dt = document.getElementById('add-datetime').value;
+  const type = document.getElementById('add-type').value;
+  if (!dt) { alert('Choisis une date et une heure.'); return; }
+  await sbFetch('/rest/v1/pointages', {
+    method: 'POST',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ employee_id: EMPLOYEE_ID, type, created_at: new Date(dt).toISOString() })
+  });
+  document.getElementById('add-ok').style.display = 'block';
+  setTimeout(() => document.getElementById('add-ok').style.display = 'none', 2000);
+  renderEdit();
+  renderDashboard();
+}
+
+async function deleteEntry(id) {
+  if (!confirm('Supprimer ce pointage ?')) return;
+  await sbFetch(`/rest/v1/pointages?id=eq.${id}`, { method: 'DELETE' });
+  document.getElementById('row-' + id)?.remove();
+  renderDashboard();
+}
+
+async function deleteAll() {
+  if (!confirm('Supprimer TOUS les pointages ? Cette action est irréversible.')) return;
+  await sbFetch(`/rest/v1/pointages?employee_id=eq.${EMPLOYEE_ID}`, { method: 'DELETE' });
+  renderEdit();
+  renderDashboard();
+}
+
+// ── QR ────────────────────────────────────────────────
 function renderQR() {
   const wrap = document.getElementById('qr-wrap');
   wrap.innerHTML = '';
@@ -357,7 +451,6 @@ function renderQR() {
   document.getElementById('qr-url-box').textContent = url;
   new QRCode(wrap, { text: url, width: 200, height: 200, colorDark: '#1C1B18', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
 }
-
 function dlQR() {
   const canvas = document.querySelector('#qr-wrap canvas');
   if (!canvas) return;
@@ -366,11 +459,11 @@ function dlQR() {
   a.href = canvas.toDataURL();
   a.click();
 }
-
 function copyPunchURL() {
   navigator.clipboard.writeText(window.location.origin + '/').then(() => alert('Lien copié !'));
 }
 
+// ── Réglages ──────────────────────────────────────────
 async function loadSettings() {
   const s = await getSettings();
   document.getElementById('s-name').value      = s.employee_name || '';
@@ -379,10 +472,24 @@ async function loadSettings() {
   document.getElementById('s-employer').value  = s.employer_name || '';
   document.getElementById('s-cesu-emp2').value = s.cesu_employer || '';
   document.getElementById('s-message').value   = s.message || '';
+
+  const activeDiv = document.getElementById('message-active-display');
+  if (s.message && s.message.trim() !== '') {
+    activeDiv.style.display = 'block';
+    activeDiv.innerHTML = `
+      <div class="message-active">
+        <div class="message-active-text">
+          <div class="message-active-label">✓ Message actif</div>
+          ${s.message}
+        </div>
+      </div>`;
+  } else {
+    activeDiv.style.display = 'none';
+  }
 }
 
 async function saveMessage() {
-  const message = document.getElementById('s-message').value;
+  const message = document.getElementById('s-message').value.trim();
   await sbFetch('/rest/v1/settings?id=eq.main', {
     method: 'PATCH',
     headers: { 'Prefer': 'return=minimal' },
@@ -390,6 +497,19 @@ async function saveMessage() {
   });
   document.getElementById('message-ok').style.display = 'block';
   setTimeout(() => document.getElementById('message-ok').style.display = 'none', 2500);
+  loadSettings();
+}
+
+async function deleteMessage() {
+  document.getElementById('s-message').value = '';
+  await sbFetch('/rest/v1/settings?id=eq.main', {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ message: '' })
+  });
+  document.getElementById('message-ok').style.display = 'block';
+  setTimeout(() => document.getElementById('message-ok').style.display = 'none', 2500);
+  loadSettings();
 }
 
 async function saveSettings() {
@@ -411,8 +531,10 @@ async function saveSettings() {
   });
   document.getElementById('settings-ok').style.display = 'block';
   setTimeout(() => document.getElementById('settings-ok').style.display = 'none', 2500);
+  loadSettings();
 }
 
+// ── CSV ───────────────────────────────────────────────
 async function exportCSV() {
   const [entries, settings] = await Promise.all([getAllEntries(), getSettings()]);
   const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
