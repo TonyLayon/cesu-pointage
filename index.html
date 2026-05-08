@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Pointage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1C1B18;
+    --ink-light: #6B6760;
+    --green: #2D5A3D;
+    --green-light: #E8F2EB;
+    --red: #7A2020;
+    --red-light: #F5E8E8;
+    --gold: #C4933F;
+    --radius: 20px;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    box-shadow: 0 2px 40px rgba(28,27,24,0.08);
+    text-align: center;
+  }
+
+  .time-display {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.8rem;
+    color: var(--ink);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .date-display {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    font-weight: 300;
+    text-transform: capitalize;
+    margin-bottom: 2.5rem;
+  }
+
+  .name-badge {
+    display: inline-block;
+    background: var(--cream);
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .status-in { background: var(--green-light); color: var(--green); }
+  .status-in .status-dot { background: var(--green); }
+  .status-out { background: #f0f0f0; color: var(--ink-light); }
+  .status-out .status-dot { background: var(--ink-light); }
+
+  .punch-btn {
+    width: 100%;
+    padding: 1.1rem;
+    border: none;
+    border-radius: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.12s, opacity 0.12s;
+    letter-spacing: 0.01em;
+  }
+
+  .punch-btn:active { transform: scale(0.97); }
+  .punch-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-arrive {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .btn-depart {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .last-entry {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f0ece4;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+  }
+
+  .last-entry strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .success-overlay {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .success-overlay.show { display: flex; }
+  .card-inner { transition: opacity 0.3s; }
+  .card-inner.fade-out { opacity: 0; pointer-events: none; }
+
+  .checkmark {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .checkmark-arrive { background: var(--green-light); }
+  .checkmark-depart { background: #f0f0f0; }
+
+  .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: var(--ink);
+  }
+
+  .success-sub {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+  }
+
+  .success-time {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+
+  .loading-dots::after {
+    content: '...';
+    animation: dots 1s steps(4, end) infinite;
+  }
+
+  @keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+  }
+
+  .error-msg {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--red-light);
+    color: var(--red);
+    border-radius: 10px;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-inner" id="main-view">
+    <div class="time-display" id="clock">--:--</div>
+    <div class="date-display" id="date-display">chargement...</div>
+
+    <div class="name-badge" id="name-badge">⏳</div>
+
+    <div class="status-indicator status-out" id="status-indicator">
+      <span class="status-dot"></span>
+      <span id="status-text">Vérification...</span>
+    </div>
+
+    <button class="punch-btn btn-arrive" id="punch-btn" disabled>
+      <span id="btn-label">Chargement<span class="loading-dots"></span></span>
+    </button>
+
+    <div class="last-entry" id="last-entry" style="display:none"></div>
+    <div class="error-msg" id="error-msg" style="display:none"></div>
+  </div>
+
+  <div class="success-overlay" id="success-view">
+    <div class="checkmark" id="success-icon"></div>
+    <div class="success-title" id="success-title"></div>
+    <div class="success-time" id="success-time"></div>
+    <div class="success-sub" id="success-sub"></div>
+  </div>
+</div>
+
+<script>
+// ─── Config ───────────────────────────────────────────
+// Remplace par ton URL Supabase et ta clé anon
+const SUPABASE_URL = 'https://lleptghxrugaasqvgsgn.supabase.co';
+const SUPABASE_KEY = 'sb_secret_CPAlKGyzbg7INTroSKR1gw_u4Kd5Vu_';
+const EMPLOYEE_ID  = 'employe_1'; // identifiant unique de l'employée
+// ──────────────────────────────────────────────────────
+
+let lastType = null;
+let lastTimestamp = null;
+
+// Clock
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('date-display').textContent =
+    now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// Fetch last entry to determine button state
+async function init() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/pointages?employee_id=eq.${EMPLOYEE_ID}&order=created_at.desc&limit=1`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+    );
+    const data = await res.json();
+    const last = data[0] || null;
+    lastType = last ? last.type : null;
+    lastTimestamp = last ? last.created_at : null;
+
+    // Load settings for name
+    const sRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/settings?id=eq.main&select=employee_name`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+    );
+    const sData = await sRes.json();
+    const empName = sData[0]?.employee_name || 'Employée';
+
+    document.getElementById('name-badge').textContent = empName;
+
+    const isCurrentlyIn = lastType === 'in';
+    const btn = document.getElementById('punch-btn');
+    const statusEl = document.getElementById('status-indicator');
+    const statusText = document.getElementById('status-text');
+    const btnLabel = document.getElementById('btn-label');
+
+    if (isCurrentlyIn) {
+      statusEl.className = 'status-indicator status-in';
+      statusText.textContent = 'Présente';
+      btn.className = 'punch-btn btn-depart';
+      btnLabel.textContent = 'Pointer le départ';
+      if (lastTimestamp) {
+        const since = new Date(lastTimestamp);
+        document.getElementById('last-entry').style.display = 'block';
+        document.getElementById('last-entry').innerHTML =
+          `Arrivée à <strong>${since.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</strong>`;
+      }
+    } else {
+      statusEl.className = 'status-indicator status-out';
+      statusText.textContent = 'Pas encore arrivée';
+      btn.className = 'punch-btn btn-arrive';
+      btnLabel.textContent = 'Pointer l\'arrivée';
+      if (lastTimestamp) {
+        const lastOut = new Date(lastTimestamp);
+        document.getElementById('last-entry').style.display = 'block';
+        document.getElementById('last-entry').innerHTML =
+          `Dernier départ : <strong>${lastOut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })} à ${lastOut.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</strong>`;
+      }
+    }
+
+    btn.disabled = false;
+    btn.onclick = punch;
+
+  } catch (e) {
+    document.getElementById('error-msg').style.display = 'block';
+    document.getElementById('error-msg').textContent = 'Erreur de connexion. Réessaie dans un instant.';
+    document.getElementById('btn-label').textContent = 'Réessayer';
+    document.getElementById('punch-btn').disabled = false;
+    document.getElementById('punch-btn').onclick = () => location.reload();
+  }
+}
+
+async function punch() {
+  const btn = document.getElementById('punch-btn');
+  btn.disabled = true;
+  document.getElementById('btn-label').innerHTML = 'Enregistrement<span class="loading-dots"></span>';
+
+  const type = lastType === 'in' ? 'out' : 'in';
+  const now = new Date();
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/pointages`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        employee_id: EMPLOYEE_ID,
+        type: type,
+        created_at: now.toISOString()
+      })
+    });
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    showSuccess(type, now);
+  } catch (e) {
+    btn.disabled = false;
+    document.getElementById('btn-label').textContent = type === 'in' ? "Pointer l'arrivée" : 'Pointer le départ';
+    document.getElementById('error-msg').style.display = 'block';
+    document.getElementById('error-msg').textContent = 'Erreur réseau. Réessaie.';
+  }
+}
+
+function showSuccess(type, time) {
+  document.getElementById('main-view').classList.add('fade-out');
+  setTimeout(() => {
+    document.getElementById('main-view').style.display = 'none';
+    const sv = document.getElementById('success-view');
+    sv.classList.add('show');
+
+    const icon = document.getElementById('success-icon');
+    const title = document.getElementById('success-title');
+    const sub = document.getElementById('success-sub');
+    const timeEl = document.getElementById('success-time');
+
+    if (type === 'in') {
+      icon.className = 'checkmark checkmark-arrive';
+      icon.textContent = '✓';
+      title.textContent = 'Bonne journée !';
+      sub.textContent = 'Arrivée enregistrée';
+    } else {
+      icon.className = 'checkmark checkmark-depart';
+      icon.textContent = '👋';
+      title.textContent = 'À bientôt !';
+      sub.textContent = 'Départ enregistré';
+    }
+    timeEl.textContent = time.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  }, 300);
+}
+
+init();
+</script>
+</body>
+</html>
