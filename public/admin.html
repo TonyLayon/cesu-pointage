@@ -9,112 +9,53 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --cream: #F5F0E8;
-    --ink: #1C1B18;
-    --ink-light: #6B6760;
-    --green: #2D5A3D;
-    --green-light: #E8F2EB;
-    --red: #7A2020;
-    --red-light: #F5E8E8;
-    --gold: #C4933F;
-    --gold-light: #FBF4E8;
-    --border: #E8E4DC;
-    --white: #FFFFFF;
+    --cream: #F5F0E8; --ink: #1C1B18; --ink-light: #6B6760;
+    --green: #2D5A3D; --green-light: #E8F2EB;
+    --red: #7A2020; --red-light: #F5E8E8;
+    --gold: #C4933F; --gold-light: #FBF4E8;
+    --border: #E8E4DC; --white: #FFFFFF;
   }
-
-  body {
-    background: var(--cream);
-    font-family: 'DM Sans', sans-serif;
-    color: var(--ink);
-    min-height: 100vh;
-  }
-
+  body { background: var(--cream); font-family: 'DM Sans', sans-serif; color: var(--ink); min-height: 100vh; }
   header {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 10;
   }
-
-  .logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.3rem;
-    color: var(--ink);
-  }
-
+  .logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--ink); }
   .logo span { color: var(--gold); }
-
   nav { display: flex; gap: 0.25rem; }
   nav button {
-    padding: 0.45rem 1rem;
-    border-radius: 8px;
-    border: none;
-    background: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.875rem;
-    cursor: pointer;
-    color: var(--ink-light);
-    transition: all 0.15s;
+    padding: 0.45rem 1rem; border-radius: 8px; border: none; background: none;
+    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; cursor: pointer;
+    color: var(--ink-light); transition: all 0.15s;
   }
-  nav button.active, nav button:hover {
-    background: var(--cream);
-    color: var(--ink);
-    font-weight: 500;
-  }
-
+  nav button.active, nav button:hover { background: var(--cream); color: var(--ink); font-weight: 500; }
   main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
-
   .page { display: none; }
   .page.active { display: block; }
-
-  /* ── Metrics ── */
   .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-  .metric {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 1.25rem 1.5rem;
-    border: 1px solid var(--border);
-  }
+  .metric { background: var(--white); border-radius: 16px; padding: 1.25rem 1.5rem; border: 1px solid var(--border); }
   .metric-label { font-size: 0.78rem; color: var(--ink-light); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
   .metric-value { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--ink); letter-spacing: -1px; }
   .metric-sub { font-size: 0.75rem; color: var(--ink-light); margin-top: 0.25rem; }
-
-  /* ── Month nav ── */
-  .month-nav {
-    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
-  }
+  .month-nav { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
   .month-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; flex: 1; }
   .icon-btn {
     width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
-    background: var(--white); cursor: pointer; font-size: 1rem; display: flex;
-    align-items: center; justify-content: center; transition: background 0.12s;
+    background: var(--white); cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center; transition: background 0.12s;
   }
   .icon-btn:hover { background: var(--cream); }
-
-  /* ── Table ── */
   .table-wrap { background: var(--white); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 1.5rem; }
   table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
   thead th { padding: 0.875rem 1.25rem; text-align: left; font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-light); border-bottom: 1px solid var(--border); }
   tbody td { padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border); color: var(--ink); }
   tbody tr:last-child td { border-bottom: none; }
   tfoot td { padding: 0.875rem 1.25rem; font-weight: 500; background: var(--cream); }
-
-  .pill {
-    display: inline-block; padding: 0.2rem 0.75rem; border-radius: 100px;
-    font-size: 0.75rem; font-weight: 500;
-  }
+  .pill { display: inline-block; padding: 0.2rem 0.75rem; border-radius: 100px; font-size: 0.75rem; font-weight: 500; }
   .pill-in { background: var(--green-light); color: var(--green); }
   .pill-out { background: var(--red-light); color: var(--red); }
-  .pill-complete { background: var(--gold-light); color: var(--gold); }
-
-  /* ── Buttons ── */
   .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   .btn {
     padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid var(--border);
@@ -124,56 +65,35 @@
   .btn:hover { background: var(--cream); }
   .btn-primary { background: var(--ink); color: var(--white); border-color: transparent; }
   .btn-primary:hover { opacity: 0.85; background: var(--ink); }
-
-  /* ── QR page ── */
-  .qr-card {
-    background: var(--white); border-radius: 16px; border: 1px solid var(--border);
-    padding: 2.5rem; text-align: center; max-width: 400px; margin: 0 auto 1.5rem;
-  }
+  .qr-card { background: var(--white); border-radius: 16px; border: 1px solid var(--border); padding: 2.5rem; text-align: center; max-width: 400px; margin: 0 auto 1.5rem; }
   .qr-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; margin-bottom: 0.5rem; }
   .qr-card p { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 1.5rem; }
-  #qr-wrap canvas { border-radius: 8px; }
-  .url-box {
-    font-size: 0.75rem; color: var(--ink-light); background: var(--cream);
-    padding: 0.5rem 0.75rem; border-radius: 8px; margin: 1rem 0; word-break: break-all;
-    text-align: left;
-  }
+  .url-box { font-size: 0.75rem; color: var(--ink-light); background: var(--cream); padding: 0.5rem 0.75rem; border-radius: 8px; margin: 1rem 0; word-break: break-all; text-align: left; }
   .steps { background: var(--cream); border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 0.875rem; line-height: 2; }
   .steps strong { color: var(--ink); }
-
-  /* ── Settings ── */
   .settings-card { background: var(--white); border-radius: 16px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
   .settings-card h3 { font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-light); margin-bottom: 1rem; }
   label { display: block; font-size: 0.82rem; color: var(--ink-light); margin-bottom: 0.3rem; }
-  input[type=text], input[type=number], input[type=password] {
+  input[type=text], input[type=number], input[type=password], textarea {
     width: 100%; padding: 0.6rem 0.875rem; border: 1px solid var(--border);
     border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
-    color: var(--ink); background: var(--cream); margin-bottom: 1rem;
-    transition: border-color 0.15s;
+    color: var(--ink); background: var(--cream); margin-bottom: 1rem; transition: border-color 0.15s;
   }
-  input:focus { outline: none; border-color: var(--gold); background: var(--white); }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  input:focus, textarea:focus { outline: none; border-color: var(--gold); background: var(--white); }
   .success-msg { font-size: 0.82rem; color: var(--green); margin-top: 0.5rem; display: none; }
-
-  /* ── Login gate ── */
-  .login-overlay {
-    position: fixed; inset: 0; background: var(--cream);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 100;
-  }
-  .login-box {
-    background: var(--white); border-radius: 20px; padding: 2.5rem;
-    border: 1px solid var(--border); max-width: 340px; width: 90%; text-align: center;
-  }
+  .login-overlay { position: fixed; inset: 0; background: var(--cream); display: flex; align-items: center; justify-content: center; z-index: 100; }
+  .login-box { background: var(--white); border-radius: 20px; padding: 2.5rem; border: 1px solid var(--border); max-width: 340px; width: 90%; text-align: center; }
   .login-box h1 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
   .login-box p { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 1.5rem; }
   .login-error { font-size: 0.8rem; color: var(--red); margin-top: 0.5rem; display: none; }
-
   .empty { text-align: center; padding: 3rem; color: var(--ink-light); font-size: 0.9rem; }
+  .message-preview { background: var(--cream); border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.85rem; color: var(--ink-light); margin-top: -0.5rem; margin-bottom: 1rem; }
+  .message-preview strong { color: var(--ink); display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
 </style>
 </head>
 <body>
 
-<!-- Login gate -->
 <div class="login-overlay" id="login-overlay">
   <div class="login-box">
     <h1>Point<span style="color:var(--gold)">age</span></h1>
@@ -197,39 +117,27 @@
 </header>
 
 <main>
-
-  <!-- ── DASHBOARD ── -->
+  <!-- DASHBOARD -->
   <div class="page active" id="page-dashboard">
     <div class="month-nav">
       <button class="icon-btn" onclick="changeMonth(-1)">‹</button>
       <div class="month-title" id="month-title"></div>
       <button class="icon-btn" onclick="changeMonth(1)">›</button>
     </div>
-
     <div class="metrics" id="metrics"></div>
-
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Arrivée</th>
-            <th>Départ</th>
-            <th>Durée</th>
-            <th>Montant</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Date</th><th>Arrivée</th><th>Départ</th><th>Durée</th><th>Montant</th></tr></thead>
         <tbody id="sessions-body"></tbody>
         <tfoot id="sessions-foot"></tfoot>
       </table>
     </div>
-
     <div class="btn-row">
       <button class="btn btn-primary" onclick="exportCSV()">↓ Exporter CSV</button>
     </div>
   </div>
 
-  <!-- ── HISTORY ── -->
+  <!-- HISTORY -->
   <div class="page" id="page-history">
     <h2 style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:1.5rem">Tous les pointages</h2>
     <div class="table-wrap">
@@ -240,7 +148,7 @@
     </div>
   </div>
 
-  <!-- ── QR ── -->
+  <!-- QR -->
   <div class="page" id="page-qr">
     <div class="qr-card">
       <h2>QR Code de pointage</h2>
@@ -261,8 +169,16 @@
     </div>
   </div>
 
-  <!-- ── SETTINGS ── -->
+  <!-- SETTINGS -->
   <div class="page" id="page-settings">
+    <div class="settings-card">
+      <h3>Message du jour</h3>
+      <label>Message affiché à l'arrivée (laisse vide pour ne rien afficher)</label>
+      <textarea id="s-message" placeholder="ex: Merci de penser à passer l'aspirateur dans la chambre bleue aujourd'hui !"></textarea>
+      <button class="btn btn-primary" onclick="saveMessage()" style="margin-bottom:0.75rem">Envoyer le message</button>
+      <div class="success-msg" id="message-ok">✓ Message enregistré</div>
+    </div>
+
     <div class="settings-card">
       <h3>Employé(e)</h3>
       <label>Prénom Nom</label>
@@ -287,21 +203,17 @@
     <button class="btn btn-primary" onclick="saveSettings()">Enregistrer</button>
     <div class="success-msg" id="settings-ok">✓ Paramètres enregistrés</div>
   </div>
-
 </main>
 
 <script>
-// ─── Config ───────────────────────────────────────────
 const SUPABASE_URL = 'https://lleptghxrugaasqvgsgn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsZXB0Z2h4cnVnYWFzcXZnc2duIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMzM4MjYsImV4cCI6MjA5MzgwOTgyNn0.WUYkPH46lmAszpHEyKzozaXPPhC6fEn4VpuVdxNnROs';
 const EMPLOYEE_ID  = 'employe_1';
-const DEFAULT_PWD  = 'cesu1234'; // modifiable dans les réglages
-// ──────────────────────────────────────────────────────
+const DEFAULT_PWD  = 'cesu1234';
 
 let currentMonth = new Date().getMonth();
 let currentYear  = new Date().getFullYear();
 
-// ── Auth ──────────────────────────────────────────────
 function checkPwd() {
   const pwd = document.getElementById('pwd-input').value;
   const stored = localStorage.getItem('cesu_pwd') || DEFAULT_PWD;
@@ -313,7 +225,6 @@ function checkPwd() {
   }
 }
 
-// ── API helpers ───────────────────────────────────────
 async function sbFetch(path, opts = {}) {
   const res = await fetch(SUPABASE_URL + path, {
     ...opts,
@@ -331,14 +242,13 @@ async function sbFetch(path, opts = {}) {
 
 async function getSettings() {
   const data = await sbFetch(`/rest/v1/settings?id=eq.main`);
-  return data[0] || { employee_name: 'Employée', rate: 13.5, cesu_emp: '', employer_name: '', cesu_employer: '' };
+  return data[0] || { employee_name: 'Employée', rate: 13.5, cesu_emp: '', employer_name: '', cesu_employer: '', message: '' };
 }
 
 async function getAllEntries() {
   return await sbFetch(`/rest/v1/pointages?employee_id=eq.${EMPLOYEE_ID}&order=created_at.asc`);
 }
 
-// ── Nav ───────────────────────────────────────────────
 function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -356,13 +266,11 @@ function changeMonth(d) {
   renderDashboard();
 }
 
-// ── Sessions computation ──────────────────────────────
 function computeSessions(entries, month, year) {
   const filtered = entries.filter(e => {
     const d = new Date(e.created_at);
     return d.getMonth() === month && d.getFullYear() === year;
   });
-
   const sessions = [];
   let pendingIn = null;
   for (const e of filtered) {
@@ -376,21 +284,14 @@ function computeSessions(entries, month, year) {
   return sessions;
 }
 
-function fmtTime(ts) {
-  return new Date(ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-}
-function fmtDate(ts) {
-  return new Date(ts).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
-}
+function fmtTime(ts) { return new Date(ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
+function fmtDate(ts) { return new Date(ts).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }); }
 
-// ── Dashboard ─────────────────────────────────────────
 async function renderDashboard() {
   const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   document.getElementById('month-title').textContent = months[currentMonth] + ' ' + currentYear;
-
   const [entries, settings] = await Promise.all([getAllEntries(), getSettings()]);
   const sessions = computeSessions(entries, currentMonth, currentYear);
-
   const totalH   = sessions.reduce((s, x) => s + x.hours, 0);
   const totalEur = totalH * (settings.rate || 13.5);
 
@@ -424,19 +325,16 @@ async function renderDashboard() {
         <td>${fmtTime(s.out.created_at)}</td>
         <td>${s.hours.toFixed(2)}h</td>
         <td>${(s.hours * (settings.rate || 13.5)).toFixed(2)}€</td>
-      </tr>
-    `).join('');
+      </tr>`).join('');
     document.getElementById('sessions-foot').innerHTML = `
       <tr>
         <td colspan="3">Total</td>
         <td>${totalH.toFixed(2)}h</td>
         <td>${totalEur.toFixed(2)}€</td>
-      </tr>
-    `;
+      </tr>`;
   }
 }
 
-// ── History ───────────────────────────────────────────
 async function renderHistory() {
   const entries = await getAllEntries();
   const tbody = document.getElementById('history-body');
@@ -449,11 +347,9 @@ async function renderHistory() {
       <td>${fmtDate(e.created_at)}</td>
       <td>${fmtTime(e.created_at)}</td>
       <td><span class="pill ${e.type === 'in' ? 'pill-in' : 'pill-out'}">${e.type === 'in' ? 'Arrivée' : 'Départ'}</span></td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
 
-// ── QR ────────────────────────────────────────────────
 function renderQR() {
   const wrap = document.getElementById('qr-wrap');
   wrap.innerHTML = '';
@@ -475,14 +371,25 @@ function copyPunchURL() {
   navigator.clipboard.writeText(window.location.origin + '/').then(() => alert('Lien copié !'));
 }
 
-// ── Settings ──────────────────────────────────────────
 async function loadSettings() {
   const s = await getSettings();
-  document.getElementById('s-name').value     = s.employee_name || '';
-  document.getElementById('s-rate').value     = s.rate || '';
-  document.getElementById('s-cesu-emp').value = s.cesu_emp || '';
-  document.getElementById('s-employer').value = s.employer_name || '';
-  document.getElementById('s-cesu-emp2').value= s.cesu_employer || '';
+  document.getElementById('s-name').value      = s.employee_name || '';
+  document.getElementById('s-rate').value      = s.rate || '';
+  document.getElementById('s-cesu-emp').value  = s.cesu_emp || '';
+  document.getElementById('s-employer').value  = s.employer_name || '';
+  document.getElementById('s-cesu-emp2').value = s.cesu_employer || '';
+  document.getElementById('s-message').value   = s.message || '';
+}
+
+async function saveMessage() {
+  const message = document.getElementById('s-message').value;
+  await sbFetch('/rest/v1/settings?id=eq.main', {
+    method: 'PATCH',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ message })
+  });
+  document.getElementById('message-ok').style.display = 'block';
+  setTimeout(() => document.getElementById('message-ok').style.display = 'none', 2500);
 }
 
 async function saveSettings() {
@@ -493,33 +400,23 @@ async function saveSettings() {
     cesu_emp: document.getElementById('s-cesu-emp').value,
     employer_name: document.getElementById('s-employer').value,
     cesu_employer: document.getElementById('s-cesu-emp2').value,
+    message: document.getElementById('s-message').value,
   };
-
   const newPwd = document.getElementById('s-pwd').value;
   if (newPwd) localStorage.setItem('cesu_pwd', newPwd);
-
   await sbFetch('/rest/v1/settings?id=eq.main', {
     method: 'PATCH',
     headers: { 'Prefer': 'return=minimal' },
     body: JSON.stringify(payload)
-  }).catch(async () => {
-    await sbFetch('/rest/v1/settings', {
-      method: 'POST',
-      headers: { 'Prefer': 'return=minimal' },
-      body: JSON.stringify(payload)
-    });
   });
-
   document.getElementById('settings-ok').style.display = 'block';
   setTimeout(() => document.getElementById('settings-ok').style.display = 'none', 2500);
 }
 
-// ── Export CSV ────────────────────────────────────────
 async function exportCSV() {
   const [entries, settings] = await Promise.all([getAllEntries(), getSettings()]);
   const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   const sessions = computeSessions(entries, currentMonth, currentYear);
-
   let csv = 'Employé;N° CESU employé;Employeur;N° CESU employeur;Date;Début;Fin;Durée (h);Taux;Montant\n';
   for (const s of sessions) {
     const d = new Date(s.in.created_at).toLocaleDateString('fr-FR');
@@ -529,7 +426,6 @@ async function exportCSV() {
   }
   const totalH = sessions.reduce((t,s) => t+s.hours, 0);
   csv += `;;;;;;;${totalH.toFixed(2)};Total;${(totalH*settings.rate).toFixed(2)}\n`;
-
   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -537,9 +433,7 @@ async function exportCSV() {
   a.click();
 }
 
-async function loadAll() {
-  await renderDashboard();
-}
+async function loadAll() { await renderDashboard(); }
 </script>
 </body>
 </html>
