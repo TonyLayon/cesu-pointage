@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --cream: #F5F0E8;
     --ink: #1C1B18;
@@ -20,7 +19,6 @@
     --gold: #C4933F;
     --radius: 20px;
   }
-
   html, body {
     min-height: 100vh;
     background: var(--cream);
@@ -31,7 +29,6 @@
     justify-content: center;
     padding: 2rem 1.5rem;
   }
-
   .card {
     width: 100%;
     max-width: 380px;
@@ -41,7 +38,6 @@
     box-shadow: 0 2px 40px rgba(28,27,24,0.08);
     text-align: center;
   }
-
   .time-display {
     font-family: 'DM Serif Display', serif;
     font-size: 3.8rem;
@@ -50,7 +46,6 @@
     line-height: 1;
     margin-bottom: 0.25rem;
   }
-
   .date-display {
     font-size: 0.9rem;
     color: var(--ink-light);
@@ -58,7 +53,6 @@
     text-transform: capitalize;
     margin-bottom: 2.5rem;
   }
-
   .name-badge {
     display: inline-block;
     background: var(--cream);
@@ -70,7 +64,6 @@
     margin-bottom: 2rem;
     letter-spacing: 0.02em;
   }
-
   .status-indicator {
     display: flex;
     align-items: center;
@@ -82,18 +75,11 @@
     border-radius: 100px;
     margin-bottom: 2rem;
   }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
   .status-in { background: var(--green-light); color: var(--green); }
   .status-in .status-dot { background: var(--green); }
   .status-out { background: #f0f0f0; color: var(--ink-light); }
   .status-out .status-dot { background: var(--ink-light); }
-
   .punch-btn {
     width: 100%;
     padding: 1.1rem;
@@ -106,20 +92,10 @@
     transition: transform 0.12s, opacity 0.12s;
     letter-spacing: 0.01em;
   }
-
   .punch-btn:active { transform: scale(0.97); }
   .punch-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .btn-arrive {
-    background: var(--green);
-    color: #fff;
-  }
-
-  .btn-depart {
-    background: var(--ink);
-    color: #fff;
-  }
-
+  .btn-arrive { background: var(--green); color: #fff; }
+  .btn-depart { background: var(--ink); color: #fff; }
   .last-entry {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
@@ -127,12 +103,7 @@
     font-size: 0.8rem;
     color: var(--ink-light);
   }
-
-  .last-entry strong {
-    font-weight: 500;
-    color: var(--ink);
-  }
-
+  .last-entry strong { font-weight: 500; color: var(--ink); }
   .success-overlay {
     display: none;
     flex-direction: column;
@@ -140,54 +111,54 @@
     justify-content: center;
     gap: 1rem;
   }
-
   .success-overlay.show { display: flex; }
   .card-inner { transition: opacity 0.3s; }
   .card-inner.fade-out { opacity: 0; pointer-events: none; }
-
   .checkmark {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    width: 72px; height: 72px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin-bottom: 0.5rem;
   }
-
   .checkmark-arrive { background: var(--green-light); }
   .checkmark-depart { background: #f0f0f0; }
-
   .success-title {
     font-family: 'DM Serif Display', serif;
     font-size: 1.7rem;
     color: var(--ink);
   }
-
-  .success-sub {
-    font-size: 0.9rem;
-    color: var(--ink-light);
-  }
-
+  .success-sub { font-size: 0.9rem; color: var(--ink-light); }
   .success-time {
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: var(--gold);
-    letter-spacing: -0.5px;
+    font-size: 1.3rem; font-weight: 500;
+    color: var(--gold); letter-spacing: -0.5px;
   }
-
+  .success-message {
+    margin-top: 0.5rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--cream);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.5;
+    text-align: left;
+    width: 100%;
+  }
+  .success-message-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-light);
+    margin-bottom: 0.3rem;
+  }
   .loading-dots::after {
     content: '...';
     animation: dots 1s steps(4, end) infinite;
   }
-
   @keyframes dots {
     0%, 20% { content: '.'; }
     40% { content: '..'; }
     60%, 100% { content: '...'; }
   }
-
   .error-msg {
     margin-top: 1rem;
     padding: 0.75rem 1rem;
@@ -199,23 +170,18 @@
 </style>
 </head>
 <body>
-
 <div class="card">
   <div class="card-inner" id="main-view">
     <div class="time-display" id="clock">--:--</div>
     <div class="date-display" id="date-display">chargement...</div>
-
     <div class="name-badge" id="name-badge">⏳</div>
-
     <div class="status-indicator status-out" id="status-indicator">
       <span class="status-dot"></span>
       <span id="status-text">Vérification...</span>
     </div>
-
     <button class="punch-btn btn-arrive" id="punch-btn" disabled>
       <span id="btn-label">Chargement<span class="loading-dots"></span></span>
     </button>
-
     <div class="last-entry" id="last-entry" style="display:none"></div>
     <div class="error-msg" id="error-msg" style="display:none"></div>
   </div>
@@ -225,21 +191,22 @@
     <div class="success-title" id="success-title"></div>
     <div class="success-time" id="success-time"></div>
     <div class="success-sub" id="success-sub"></div>
+    <div class="success-message" id="success-message" style="display:none">
+      <div class="success-message-label">Message</div>
+      <div id="success-message-text"></div>
+    </div>
   </div>
 </div>
 
 <script>
-// ─── Config ───────────────────────────────────────────
-// Remplace par ton URL Supabase et ta clé anon
 const SUPABASE_URL = 'https://lleptghxrugaasqvgsgn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsZXB0Z2h4cnVnYWFzcXZnc2duIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMzM4MjYsImV4cCI6MjA5MzgwOTgyNn0.WUYkPH46lmAszpHEyKzozaXPPhC6fEn4VpuVdxNnROs';
-const EMPLOYEE_ID  = 'employe_1'; // identifiant unique de l'employée
-// ──────────────────────────────────────────────────────
+const EMPLOYEE_ID  = 'employe_1';
 
 let lastType = null;
 let lastTimestamp = null;
+let currentMessage = '';
 
-// Clock
 function updateClock() {
   const now = new Date();
   document.getElementById('clock').textContent =
@@ -250,7 +217,6 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
-// Fetch last entry to determine button state
 async function init() {
   try {
     const res = await fetch(
@@ -262,13 +228,13 @@ async function init() {
     lastType = last ? last.type : null;
     lastTimestamp = last ? last.created_at : null;
 
-    // Load settings for name
     const sRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/settings?id=eq.main&select=employee_name`,
+      `${SUPABASE_URL}/rest/v1/settings?id=eq.main&select=employee_name,message`,
       { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
     );
     const sData = await sRes.json();
     const empName = sData[0]?.employee_name || 'Employée';
+    currentMessage = sData[0]?.message || '';
 
     document.getElementById('name-badge').textContent = empName;
 
@@ -293,7 +259,7 @@ async function init() {
       statusEl.className = 'status-indicator status-out';
       statusText.textContent = 'Pas encore arrivée';
       btn.className = 'punch-btn btn-arrive';
-      btnLabel.textContent = 'Pointer l\'arrivée';
+      btnLabel.textContent = "Pointer l'arrivée";
       if (lastTimestamp) {
         const lastOut = new Date(lastTimestamp);
         document.getElementById('last-entry').style.display = 'block';
@@ -331,15 +297,12 @@ async function punch() {
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({
-        employee_id: EMPLOYEE_ID,
-        type: type
-      })
+      body: JSON.stringify({ employee_id: EMPLOYEE_ID, type: type })
     });
 
     if (!res.ok) throw new Error('HTTP ' + res.status);
-
     showSuccess(type, now);
+
   } catch (e) {
     btn.disabled = false;
     document.getElementById('btn-label').textContent = type === 'in' ? "Pointer l'arrivée" : 'Pointer le départ';
@@ -359,17 +322,25 @@ function showSuccess(type, time) {
     const title = document.getElementById('success-title');
     const sub = document.getElementById('success-sub');
     const timeEl = document.getElementById('success-time');
+    const msgBox = document.getElementById('success-message');
+    const msgText = document.getElementById('success-message-text');
 
     if (type === 'in') {
       icon.className = 'checkmark checkmark-arrive';
       icon.textContent = '✓';
       title.textContent = 'Bonne journée !';
       sub.textContent = 'Arrivée enregistrée';
+      // Affiche le message seulement à l'arrivée
+      if (currentMessage && currentMessage.trim() !== '') {
+        msgText.textContent = currentMessage;
+        msgBox.style.display = 'block';
+      }
     } else {
       icon.className = 'checkmark checkmark-depart';
       icon.textContent = '👋';
       title.textContent = 'À bientôt !';
       sub.textContent = 'Départ enregistré';
+      msgBox.style.display = 'none';
     }
     timeEl.textContent = time.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
   }, 300);
